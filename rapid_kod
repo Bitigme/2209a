@@ -1,0 +1,34 @@
+PROC main()
+    CONST string file_name := "/path/to/your/file/coordinates.txt";
+    VAR string file_line;
+    VAR num x_val;
+    VAR num y_val;
+    VAR robtarget target;
+    VAR bool start_process := FALSE;
+
+    WHILE TRUE DO
+        IF start_process THEN
+            TRYNXT
+                Open file_name, file\Read;
+
+                ReadLn file_line;
+                x_val := StrToNum(file_line);
+
+                ReadLn file_line;
+                y_val := StrToNum(file_line);
+
+                Close file_name;
+
+                target.trans.x := x_val;
+                target.trans.y := y_val;
+                target.trans.z := z_val;
+                target.rot := rot_val;
+
+                MoveL target, v100, z50, tool0;
+
+                WaitTime 1;
+            NEXT
+                TPWrite "Error reading or processing the file. ERRNO: \Num:=ERRNO";
+        ENDIF
+    ENDWHILE
+ENDPROC
